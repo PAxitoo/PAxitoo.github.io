@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>StockUp | Verification AdMob</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <meta
+      name="description"
+      content="Page technique publique utilisee pour la verification AdMob et la publication du fichier app-ads.txt de StockUp."
+    >
+    <style>
+      :root {
+        --paper: #f2f2ef;
+        --panel: rgba(255, 255, 255, 0.74);
+        --ink: #111111;
+        --muted: #5b5b57;
+        --line: rgba(17, 17, 17, 0.1);
+        --shadow: 0 24px 80px rgba(17, 17, 17, 0.12);
+        --accent: #111111;
+        --accent-soft: #d9f07c;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Avenir Next", "Helvetica Neue", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(217, 240, 124, 0.7), transparent 34%),
+          radial-gradient(circle at 85% 15%, rgba(17, 17, 17, 0.12), transparent 20%),
+          linear-gradient(180deg, #fafaf8 0%, var(--paper) 100%);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(17, 17, 17, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(17, 17, 17, 0.03) 1px, transparent 1px);
+        background-size: 40px 40px;
+        pointer-events: none;
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 85%);
+      }
+
+      main {
+        width: min(940px, calc(100% - 24px));
+        margin: 0 auto;
+        padding: 24px 0 48px;
+      }
+
+      .topbar,
+      .hero,
+      .card {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 30px;
+        background: var(--panel);
+        backdrop-filter: blur(18px);
+        box-shadow: var(--shadow);
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 16px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 58px;
+        height: 58px;
+        padding: 8px;
+        border-radius: 18px;
+        border: 1px solid rgba(17, 17, 17, 0.08);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.7));
+      }
+
+      .brand-mark img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 16px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.62);
+        text-decoration: none;
+        color: var(--ink);
+        font-weight: 700;
+      }
+
+      .hero {
+        margin-top: 16px;
+        padding: clamp(28px, 6vw, 52px);
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        top: -120px;
+        right: -50px;
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(217, 240, 124, 0.9), transparent 68%);
+        opacity: 0.75;
+      }
+
+      .eyebrow {
+        margin: 0 0 4px;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      h1,
+      h2 {
+        margin: 0;
+        font-family: "Avenir Next Condensed", "Avenir Next", sans-serif;
+        letter-spacing: -0.05em;
+      }
+
+      h1 {
+        max-width: 12ch;
+        margin-top: 12px;
+        font-size: clamp(2.8rem, 8vw, 5.2rem);
+        line-height: 0.95;
+      }
+
+      p {
+        line-height: 1.72;
+        color: var(--muted);
+      }
+
+      code,
+      .mono {
+        font-family: "SFMono-Regular", "Menlo", "Consolas", monospace;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 22px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 16px;
+      }
+
+      .card {
+        padding: 22px;
+      }
+
+      .card h2 {
+        font-size: 1.3rem;
+      }
+
+      .snippet {
+        display: block;
+        padding: 14px 16px;
+        margin-top: 12px;
+        border-radius: 18px;
+        background: rgba(17, 17, 17, 0.04);
+        color: var(--ink);
+        word-break: break-word;
+      }
+
+      footer {
+        margin-top: 16px;
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+
+      @media (max-width: 760px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .topbar,
+        .hero,
+        .card {
+          border-radius: 22px;
+        }
+
+        .brand-mark {
+          width: 50px;
+          height: 50px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="topbar">
+        <a class="brand" href="./">
+          <span class="brand-mark">
+            <img src="./stockup-logo.png" alt="Logo StockUp">
+          </span>
+          <span>
+            <p class="eyebrow">Support technique</p>
+            <strong>StockUp</strong>
+          </span>
+        </a>
+        <a class="button" href="./">Retour a la landing page</a>
+      </header>
+
+      <section class="hero" aria-labelledby="hero-title">
+        <p class="eyebrow">Public AdMob Proof</p>
+        <h1 id="hero-title">Page publique pour la verification AdMob.</h1>
+        <p>
+          Ce domaine sert a la fois de landing page publique pour l'application
+          <strong>StockUp</strong> et de support technique pour publier le fichier
+          <code>app-ads.txt</code> requis par AdMob.
+        </p>
+        <div class="actions">
+          <a class="button" href="./app-ads.txt">Ouvrir app-ads.txt</a>
+          <a class="button" href="https://support.google.com/admob/answer/9363762?hl=en">Documentation AdMob</a>
+        </div>
+      </section>
+
+      <section class="grid" aria-label="Informations techniques">
+        <article class="card">
+          <h2>Publisher autorise</h2>
+          <p>Le fichier public expose la declaration attendue par AdMob a la racine du domaine.</p>
+          <span class="snippet mono">google.com, pub-8763543774975095, DIRECT, f08c47fec0942fa0</span>
+        </article>
+
+        <article class="card">
+          <h2>Usage prevu</h2>
+          <p>
+            Le crawler AdMob doit pouvoir lire le fichier depuis une URL du type
+            <span class="mono">https://ton-domaine/app-ads.txt</span>. Cette page
+            sert seulement de preuve publique et de contexte technique.
+          </p>
+        </article>
+      </section>
+
+      <footer>
+        Support technique public pour AdMob. La presentation de l'application est
+        disponible sur <a href="./">la landing page StockUp</a>.
+      </footer>
+    </main>
+  </body>
+</html>

@@ -3,22 +3,23 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>StockUp | AdMob Verification</title>
+    <title>StockUp | Gestion d'inventaire et profits pour le resell</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml">
     <meta
       name="description"
-      content="Page publique minimale pour publier le fichier app-ads.txt utilise par AdMob pour StockUp."
+      content="StockUp est une application iOS pour suivre son stock, ses ventes, ses frais de plateforme et ses profits dans le resell."
     >
     <style>
       :root {
-        --paper: #f2f2ef;
-        --panel: rgba(255, 255, 255, 0.74);
+        --sand: #f4f1e8;
+        --cream: rgba(255, 252, 244, 0.82);
         --ink: #111111;
-        --muted: #5b5b57;
+        --muted: #615c54;
         --line: rgba(17, 17, 17, 0.1);
-        --shadow: 0 24px 80px rgba(17, 17, 17, 0.12);
-        --accent: #111111;
-        --accent-soft: #d9f07c;
+        --line-strong: rgba(17, 17, 17, 0.18);
+        --accent: #d7f06f;
+        --accent-ink: #111111;
+        --card-shadow: 0 28px 80px rgba(17, 17, 17, 0.12);
       }
 
       * {
@@ -26,87 +27,83 @@
       }
 
       html {
-        color-scheme: light;
+        scroll-behavior: smooth;
       }
 
       body {
         margin: 0;
         min-height: 100vh;
-        font-family: "Avenir Next", "Segoe UI", sans-serif;
+        font-family: "Avenir Next", "Helvetica Neue", sans-serif;
         color: var(--ink);
         background:
-          radial-gradient(circle at top left, rgba(217, 240, 124, 0.7), transparent 34%),
-          radial-gradient(circle at 85% 15%, rgba(17, 17, 17, 0.12), transparent 20%),
-          linear-gradient(180deg, #fafaf8 0%, var(--paper) 100%);
+          radial-gradient(circle at top left, rgba(215, 240, 111, 0.68), transparent 28%),
+          radial-gradient(circle at 88% 12%, rgba(17, 17, 17, 0.12), transparent 18%),
+          linear-gradient(180deg, #fbfaf6 0%, var(--sand) 100%);
       }
 
       body::before {
         content: "";
         position: fixed;
         inset: 0;
-        background-image:
-          linear-gradient(rgba(17, 17, 17, 0.03) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(17, 17, 17, 0.03) 1px, transparent 1px);
-        background-size: 40px 40px;
         pointer-events: none;
-        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 85%);
+        background-image:
+          linear-gradient(rgba(17, 17, 17, 0.028) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(17, 17, 17, 0.028) 1px, transparent 1px);
+        background-size: 42px 42px;
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 88%);
       }
 
-      main {
-        width: min(940px, calc(100% - 32px));
+      a {
+        color: inherit;
+      }
+
+      .shell {
+        width: min(1180px, calc(100% - 28px));
         margin: 0 auto;
-        padding: 32px 0 48px;
+        padding: 18px 0 56px;
       }
 
+      .nav,
+      .panel,
       .hero,
-      .card {
-        position: relative;
-        overflow: hidden;
+      .metric-card,
+      .feature-card,
+      .step-card,
+      .proof-card {
         border: 1px solid var(--line);
-        border-radius: 32px;
-        background: var(--panel);
+        background: var(--cream);
         backdrop-filter: blur(18px);
-        box-shadow: var(--shadow);
+        box-shadow: var(--card-shadow);
       }
 
-      .hero {
-        padding: clamp(28px, 6vw, 56px);
-      }
-
-      .hero::after {
-        content: "";
-        position: absolute;
-        top: -120px;
-        right: -50px;
-        width: 260px;
-        height: 260px;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(217, 240, 124, 0.9), transparent 68%);
-        opacity: 0.75;
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 14px 18px;
+        border-radius: 24px;
       }
 
       .brand {
         display: inline-flex;
         align-items: center;
-        gap: 16px;
-        margin-bottom: 28px;
+        gap: 14px;
+        text-decoration: none;
       }
 
-      .brand-mark {
+      .brand-badge {
         display: grid;
         place-items: center;
-        width: 88px;
-        height: 88px;
-        padding: 10px;
+        width: 60px;
+        height: 60px;
+        padding: 8px;
+        border-radius: 18px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.76));
         border: 1px solid rgba(17, 17, 17, 0.08);
-        border-radius: 26px;
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.7));
-        box-shadow: 0 12px 34px rgba(17, 17, 17, 0.08);
       }
 
-      .brand-mark img {
-        display: block;
+      .brand-badge img {
         width: 100%;
         height: 100%;
         object-fit: contain;
@@ -121,187 +118,642 @@
         color: var(--muted);
       }
 
-      .brand-name {
+      .brand-title {
         margin: 0;
         font-size: 1.1rem;
         font-weight: 800;
       }
 
-      h1 {
-        margin: 0 0 16px;
-        max-width: 12ch;
-        font-size: clamp(2.7rem, 9vw, 5.4rem);
-        line-height: 0.95;
-        letter-spacing: -0.06em;
-      }
-
-      h1 span {
-        display: block;
-      }
-
-      .intro {
-        max-width: 62ch;
-        margin: 0;
-        font-size: 1.08rem;
-        line-height: 1.7;
-        color: var(--muted);
-      }
-
-      code,
-      .mono {
-        font-family: "SFMono-Regular", "Menlo", "Consolas", monospace;
-      }
-
-      .actions {
+      .nav-links {
         display: flex;
         flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 28px;
+        gap: 10px;
       }
 
+      .nav-links a,
       .button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-height: 48px;
-        padding: 0 18px;
+        min-height: 46px;
+        padding: 0 16px;
         border-radius: 999px;
-        border: 1px solid var(--line);
         text-decoration: none;
         font-weight: 700;
+        border: 1px solid var(--line);
+      }
+
+      .nav-links a {
+        background: rgba(255, 255, 255, 0.54);
       }
 
       .button.primary {
         background: var(--accent);
-        color: #f8f8f4;
+        color: var(--accent-ink);
         border-color: transparent;
       }
 
       .button.secondary {
-        color: var(--ink);
-        background: rgba(255, 255, 255, 0.58);
+        background: rgba(255, 255, 255, 0.56);
       }
 
-      .grid {
+      .hero {
+        position: relative;
+        overflow: hidden;
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 16px;
-        margin-top: 16px;
+        grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+        gap: 22px;
+        margin-top: 18px;
+        padding: clamp(26px, 5vw, 48px);
+        border-radius: 34px;
       }
 
-      .card {
+      .hero::after {
+        content: "";
+        position: absolute;
+        top: -120px;
+        right: -40px;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(215, 240, 111, 0.86), transparent 70%);
+        opacity: 0.88;
+      }
+
+      .hero-copy {
+        position: relative;
+        z-index: 1;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        font-family: "Avenir Next Condensed", "Avenir Next", sans-serif;
+        letter-spacing: -0.05em;
+      }
+
+      h1 {
+        max-width: 11ch;
+        margin-top: 14px;
+        font-size: clamp(3.2rem, 8vw, 6.4rem);
+        line-height: 0.92;
+      }
+
+      .hero-lead {
+        max-width: 58ch;
+        margin: 18px 0 0;
+        font-size: 1.08rem;
+        line-height: 1.75;
+        color: var(--muted);
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .hero-notes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .chip {
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.54);
+        font-size: 0.94rem;
+        font-weight: 700;
+      }
+
+      .panel {
+        position: relative;
+        z-index: 1;
+        padding: 16px;
+        border-radius: 28px;
+      }
+
+      .phone {
+        overflow: hidden;
+        border-radius: 28px;
+        border: 1px solid var(--line-strong);
+        background: linear-gradient(180deg, #111111 0%, #202020 100%);
+        color: #f8f8f3;
+      }
+
+      .phone-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 18px 12px;
+      }
+
+      .phone-title {
+        font-size: 1.02rem;
+        font-weight: 800;
+      }
+
+      .phone-subtitle {
+        font-size: 0.84rem;
+        color: rgba(248, 248, 243, 0.72);
+      }
+
+      .phone-body {
+        display: grid;
+        gap: 12px;
+        padding: 0 14px 14px;
+      }
+
+      .phone-metrics {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .phone-card,
+      .list-row {
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .phone-card {
+        padding: 12px;
+      }
+
+      .phone-card strong,
+      .list-main strong {
+        display: block;
+        font-size: 1.05rem;
+        font-weight: 800;
+      }
+
+      .phone-label {
+        font-size: 0.72rem;
+        color: rgba(248, 248, 243, 0.7);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+
+      .list-row {
+        display: grid;
+        grid-template-columns: 48px 1fr auto;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+      }
+
+      .list-thumb {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, rgba(215, 240, 111, 0.95), rgba(255, 255, 255, 0.16));
+      }
+
+      .list-main {
+        display: grid;
+        gap: 4px;
+      }
+
+      .list-meta {
+        font-size: 0.78rem;
+        color: rgba(248, 248, 243, 0.66);
+      }
+
+      .list-side {
+        text-align: right;
+        font-weight: 800;
+      }
+
+      .section {
+        margin-top: 18px;
+      }
+
+      .metric-grid,
+      .feature-grid,
+      .steps,
+      .proof-layout {
+        display: grid;
+        gap: 16px;
+      }
+
+      .metric-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .metric-card,
+      .feature-card,
+      .step-card,
+      .proof-card {
+        border-radius: 28px;
+      }
+
+      .metric-card {
         padding: 22px;
       }
 
-      .card h2 {
-        margin: 0 0 10px;
-        font-size: 0.85rem;
+      .metric-label,
+      .section-label,
+      .feature-kicker {
+        font-size: 0.75rem;
         font-weight: 800;
-        letter-spacing: 0.12em;
+        letter-spacing: 0.16em;
         text-transform: uppercase;
+        color: var(--muted);
       }
 
-      .card p {
-        margin: 0;
+      .metric-value {
+        margin-top: 12px;
+        font-size: 2rem;
+        font-weight: 900;
+        letter-spacing: -0.06em;
+      }
+
+      .metric-text,
+      .section-copy,
+      .feature-card p,
+      .step-card p,
+      .proof-card p,
+      footer {
         color: var(--muted);
-        line-height: 1.65;
+        line-height: 1.7;
+      }
+
+      .section-head {
+        display: grid;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+
+      .section-head h2 {
+        font-size: clamp(2.2rem, 5vw, 3.6rem);
+        line-height: 0.95;
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .feature-card,
+      .step-card,
+      .proof-card {
+        padding: 24px;
+      }
+
+      .feature-card h3,
+      .step-card h3,
+      .proof-card h3 {
+        margin-top: 14px;
+        font-size: 1.45rem;
+      }
+
+      .icon-box {
+        display: inline-grid;
+        place-items: center;
+        width: 56px;
+        height: 56px;
+        border-radius: 18px;
+        background: rgba(17, 17, 17, 0.06);
+        font-size: 1.45rem;
+      }
+
+      .steps {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .step-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: var(--accent);
+        font-size: 1rem;
+        font-weight: 900;
+      }
+
+      .proof-layout {
+        grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
       }
 
       .snippet {
         display: block;
-        padding: 14px 16px;
-        margin-top: 12px;
-        border-radius: 18px;
-        background: rgba(17, 17, 17, 0.04);
-        color: var(--ink);
+        padding: 16px 18px;
+        border-radius: 20px;
+        background: rgba(17, 17, 17, 0.05);
+        border: 1px solid rgba(17, 17, 17, 0.08);
+        font-family: "SFMono-Regular", "Menlo", "Consolas", monospace;
+        font-size: 0.92rem;
         word-break: break-word;
       }
 
       footer {
         margin-top: 18px;
-        padding: 0 6px;
-        font-size: 0.92rem;
-        line-height: 1.6;
-        color: var(--muted);
+        padding: 0 4px 20px;
+        font-size: 0.94rem;
       }
 
-      @media (max-width: 760px) {
-        main {
-          width: min(100% - 20px, 940px);
-          padding-top: 20px;
-        }
-
-        .grid {
+      @media (max-width: 980px) {
+        .hero,
+        .proof-layout,
+        .feature-grid,
+        .steps,
+        .metric-grid {
           grid-template-columns: 1fr;
         }
 
-        .hero,
-        .card {
-          border-radius: 24px;
+        .phone-metrics {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 720px) {
+        .shell {
+          width: min(100% - 18px, 1180px);
+          padding-bottom: 34px;
         }
 
-        .brand-mark {
-          width: 72px;
-          height: 72px;
-          padding: 8px;
+        .nav {
+          padding: 14px;
+          border-radius: 20px;
+        }
+
+        .brand-badge {
+          width: 52px;
+          height: 52px;
+          border-radius: 16px;
+        }
+
+        .hero,
+        .metric-card,
+        .feature-card,
+        .step-card,
+        .proof-card,
+        .panel {
           border-radius: 22px;
+        }
+
+        h1 {
+          max-width: none;
+          font-size: clamp(2.7rem, 14vw, 4.6rem);
+        }
+
+        .phone-metrics {
+          grid-template-columns: 1fr;
+        }
+
+        .list-row {
+          grid-template-columns: 44px 1fr;
+        }
+
+        .list-side {
+          grid-column: 2;
+          text-align: left;
         }
       }
     </style>
   </head>
   <body>
-    <main>
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="brand" aria-label="StockUp">
-          <div class="brand-mark">
+    <div class="shell">
+      <header class="nav">
+        <a class="brand" href="./">
+          <span class="brand-badge">
             <img src="./stockup-logo.png" alt="Logo StockUp">
+          </span>
+          <span>
+            <p class="eyebrow">iOS Resell Manager</p>
+            <p class="brand-title">StockUp</p>
+          </span>
+        </a>
+
+        <nav class="nav-links" aria-label="Navigation principale">
+          <a href="#features">Fonctionnalites</a>
+          <a href="#workflow">Workflow</a>
+          <a href="./admob.html">Page technique</a>
+        </nav>
+      </header>
+
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Pense pour le resell</p>
+          <h1 id="hero-title">Pilote ton stock, tes ventes et ton profit sans friction.</h1>
+          <p class="hero-lead">
+            StockUp est une application iOS pour les revendeurs qui veulent suivre
+            leur inventaire, calculer leur rentabilite, gerer les frais de plateforme
+            et garder une vision claire de leurs ventes en temps reel.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button primary" href="#features">Voir les fonctionnalites</a>
+            <a class="button secondary" href="./admob.html">Voir la page technique</a>
           </div>
-          <div>
-            <p class="eyebrow">Public AdMob Proof</p>
-            <p class="brand-name">StockUp</p>
+
+          <div class="hero-notes" aria-label="Points forts">
+            <span class="chip">Inventaire en temps reel</span>
+            <span class="chip">ROI et profit net</span>
+            <span class="chip">Multi-devises</span>
+            <span class="chip">Tracking des expeditions</span>
           </div>
         </div>
 
-        <h1 id="hero-title">
-          Page publique
-          <span>pour app-ads.txt</span>
-        </h1>
+        <aside class="panel" aria-label="Apercu produit">
+          <div class="phone">
+            <div class="phone-top">
+              <div>
+                <div class="phone-title">Dashboard StockUp</div>
+                <div class="phone-subtitle">Vue rapide sur ton activite</div>
+              </div>
+              <div class="phone-subtitle">iPhone</div>
+            </div>
 
-        <p class="intro">
-          Ce domaine sert uniquement a publier le fichier <code>app-ads.txt</code>
-          requis par AdMob pour l'application iOS
-          <strong>StockUp - Resell Manager</strong>. Le site est volontairement
-          minimal et ne remplace pas l'application elle-meme.
-        </p>
+            <div class="phone-body">
+              <div class="phone-metrics">
+                <div class="phone-card">
+                  <span class="phone-label">Profit</span>
+                  <strong>+2 840 EUR</strong>
+                </div>
+                <div class="phone-card">
+                  <span class="phone-label">Ventes</span>
+                  <strong>37</strong>
+                </div>
+                <div class="phone-card">
+                  <span class="phone-label">ROI</span>
+                  <strong>31%</strong>
+                </div>
+              </div>
 
-        <div class="actions">
-          <a class="button primary" href="./app-ads.txt">Ouvrir app-ads.txt</a>
-          <a class="button secondary" href="https://support.google.com/admob/answer/9363762?hl=en">Documentation AdMob</a>
+              <div class="list-row">
+                <div class="list-thumb"></div>
+                <div class="list-main">
+                  <strong>Nike Dunk Low</strong>
+                  <span class="list-meta">Stock | Vinted | Quantite restante 2</span>
+                </div>
+                <div class="list-side">+68 EUR</div>
+              </div>
+
+              <div class="list-row">
+                <div class="list-thumb"></div>
+                <div class="list-main">
+                  <strong>Jordan 4 Retro</strong>
+                  <span class="list-meta">Vendu | eBay | Tracking ajoute</span>
+                </div>
+                <div class="list-side">+124 EUR</div>
+              </div>
+
+              <div class="list-row">
+                <div class="list-thumb"></div>
+                <div class="list-main">
+                  <strong>Calculateur profit</strong>
+                  <span class="list-meta">Prix, frais plateforme, estimation nette</span>
+                </div>
+                <div class="list-side">Live</div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section metric-grid" aria-label="Indicateurs clefs">
+        <article class="metric-card">
+          <div class="metric-label">Suivi clair</div>
+          <div class="metric-value">3 statuts</div>
+          <p class="metric-text">En stock, en vente, vendu. Tu sais immediatement ou se trouve chaque article.</p>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">Analyse directe</div>
+          <div class="metric-value">ROI live</div>
+          <p class="metric-text">Profit net, cout total, repartition par plateforme et performances par periode.</p>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">Operations</div>
+          <div class="metric-value">Tracking</div>
+          <p class="metric-text">Ajoute un numero d'expedition, suis la vente et garde un historique propre.</p>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">International</div>
+          <div class="metric-value">Multi-devise</div>
+          <p class="metric-text">Travaille avec plusieurs monnaies et un affichage consolide dans ta devise preferee.</p>
+        </article>
+      </section>
+
+      <section class="section" id="features">
+        <div class="section-head">
+          <p class="section-label">Fonctionnalites</p>
+          <h2>Une stack simple pour gerer tout le cycle du resell.</h2>
+          <p class="section-copy">
+            L'application regroupe les besoins concrets du revendeur: stock,
+            prix, plateformes, frais, ventes, suivi d'expedition et analyse.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="icon-box" aria-hidden="true">01</div>
+            <p class="feature-kicker">Inventaire</p>
+            <h3>Gere ton stock article par article.</h3>
+            <p>Ajoute quantite, prix d'achat, photos, statut et plateforme de vente dans une seule interface claire.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="icon-box" aria-hidden="true">02</div>
+            <p class="feature-kicker">Rentabilite</p>
+            <h3>Calcule ton profit reel.</h3>
+            <p>StockUp prend en compte prix de vente, frais de plateforme, frais d'envoi et ROI pour sortir un resultat net.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="icon-box" aria-hidden="true">03</div>
+            <p class="feature-kicker">Stats</p>
+            <h3>Lis tes performances rapidement.</h3>
+            <p>Filtre par periode, statut ou plateforme pour voir profit, ventes, cout total et repartition de tes canaux.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="icon-box" aria-hidden="true">04</div>
+            <p class="feature-kicker">Plateformes</p>
+            <h3>Automatise les frais de vente.</h3>
+            <p>Configure tes plateformes de revente pour appliquer automatiquement les commissions et frais fixes.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="icon-box" aria-hidden="true">05</div>
+            <p class="feature-kicker">Expedition</p>
+            <h3>Relie la vente au tracking.</h3>
+            <p>Ajoute un numero de suivi et garde une trace propre de chaque commande expediee.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="icon-box" aria-hidden="true">06</div>
+            <p class="feature-kicker">Export</p>
+            <h3>Recupere tes donnees quand tu veux.</h3>
+            <p>Import et export CSV pour garder la main sur ton historique et tes analyses hors de l'app.</p>
+          </article>
         </div>
       </section>
 
-      <section class="grid" aria-label="Informations techniques">
-        <article class="card">
-          <h2>Publisher autorise</h2>
-          <p>Le fichier public expose la declaration attendue par AdMob.</p>
-          <span class="snippet mono">google.com, pub-8763543774975095, DIRECT, f08c47fec0942fa0</span>
+      <section class="section" id="workflow">
+        <div class="section-head">
+          <p class="section-label">Workflow</p>
+          <h2>Trois etapes pour garder un resell propre.</h2>
+        </div>
+
+        <div class="steps">
+          <article class="step-card">
+            <span class="step-number">1</span>
+            <h3>Ajoute l'article</h3>
+            <p>Renseigne le produit, la quantite, le prix d'achat, les photos et la plateforme cible.</p>
+          </article>
+
+          <article class="step-card">
+            <span class="step-number">2</span>
+            <h3>Suit la vente</h3>
+            <p>Fais evoluer le statut de l'article, enregistre le prix de vente et le tracking au bon moment.</p>
+          </article>
+
+          <article class="step-card">
+            <span class="step-number">3</span>
+            <h3>Analyse le resultat</h3>
+            <p>Consulte le profit net, le ROI et la repartition des performances pour ajuster ta strategie.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section proof-layout" aria-label="Page technique">
+        <article class="proof-card">
+          <p class="section-label">Support technique</p>
+          <h3>Le domaine heberge aussi la verification AdMob.</h3>
+          <p>
+            En plus de presenter l'application, ce site publie le fichier
+            <strong>app-ads.txt</strong> exige par AdMob pour valider le publisher
+            autorise. La page technique reste accessible separement.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="./admob.html">Ouvrir la page technique</a>
+            <a class="button secondary" href="./app-ads.txt">Voir app-ads.txt</a>
+          </div>
         </article>
 
-        <article class="card">
-          <h2>Usage prevu</h2>
-          <p>
-            Le crawler AdMob doit pouvoir lire le fichier depuis une URL de type
-            <span class="mono">https://ton-domaine/app-ads.txt</span> ou via une
-            redirection valide depuis le domaine racine.
+        <aside class="proof-card">
+          <p class="section-label">Publisher autorise</p>
+          <span class="snippet">google.com, pub-8763543774975095, DIRECT, f08c47fec0942fa0</span>
+          <p style="margin-top: 14px;">
+            Le fichier est disponible a la racine du domaine pour rester
+            conforme au comportement attendu par les crawlers AdMob.
           </p>
-        </article>
+        </aside>
       </section>
 
       <footer>
-        Support technique public pour AdMob. Pour une verification fiable,
-        publie cette page sur un domaine racine ou configure un domaine
-        personnalise sur GitHub Pages.
+        StockUp est une application iOS de gestion d'inventaire et de profits pour le resell.
+        Besoin de la page de preuve publique AdMob ? Ouvre
+        <a href="./admob.html">la page technique</a>.
       </footer>
-    </main>
+    </div>
   </body>
 </html>
