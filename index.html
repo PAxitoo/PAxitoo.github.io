@@ -3,23 +3,33 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>StockUp | Gestion d'inventaire et profits pour le resell</title>
-    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <title>StockUp | App iOS pour gerer stock, ventes et profits resell</title>
     <meta
       name="description"
-      content="StockUp est une application iOS pour suivre son stock, ses ventes, ses frais de plateforme et ses profits dans le resell."
+      content="StockUp est une app iOS de gestion d'inventaire pour le resell avec suivi du stock, calcul de profit, ROI, tracking et multi-devise."
     >
+    <meta name="theme-color" content="#d7f06f">
+    <meta property="og:title" content="StockUp">
+    <meta
+      property="og:description"
+      content="Pilote ton stock, tes ventes et ton profit resell depuis une interface iOS claire."
+    >
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="./stockup-logo.png">
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
     <style>
       :root {
-        --sand: #f4f1e8;
-        --cream: rgba(255, 252, 244, 0.82);
+        --paper: #f5f1e7;
+        --panel: rgba(255, 252, 245, 0.8);
+        --panel-strong: rgba(255, 255, 255, 0.92);
         --ink: #111111;
-        --muted: #615c54;
+        --muted: #615b53;
         --line: rgba(17, 17, 17, 0.1);
         --line-strong: rgba(17, 17, 17, 0.18);
         --accent: #d7f06f;
-        --accent-ink: #111111;
-        --card-shadow: 0 28px 80px rgba(17, 17, 17, 0.12);
+        --accent-deep: #bed75b;
+        --shadow: 0 28px 90px rgba(17, 17, 17, 0.12);
+        --shadow-soft: 0 18px 48px rgba(17, 17, 17, 0.08);
       }
 
       * {
@@ -33,12 +43,12 @@
       body {
         margin: 0;
         min-height: 100vh;
-        font-family: "Avenir Next", "Helvetica Neue", sans-serif;
         color: var(--ink);
+        font-family: "Avenir Next", "Helvetica Neue", sans-serif;
         background:
-          radial-gradient(circle at top left, rgba(215, 240, 111, 0.68), transparent 28%),
-          radial-gradient(circle at 88% 12%, rgba(17, 17, 17, 0.12), transparent 18%),
-          linear-gradient(180deg, #fbfaf6 0%, var(--sand) 100%);
+          radial-gradient(circle at 0% 0%, rgba(215, 240, 111, 0.62), transparent 24%),
+          radial-gradient(circle at 90% 10%, rgba(17, 17, 17, 0.12), transparent 18%),
+          linear-gradient(180deg, #fbfaf6 0%, var(--paper) 100%);
       }
 
       body::before {
@@ -50,30 +60,35 @@
           linear-gradient(rgba(17, 17, 17, 0.028) 1px, transparent 1px),
           linear-gradient(90deg, rgba(17, 17, 17, 0.028) 1px, transparent 1px);
         background-size: 42px 42px;
-        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 88%);
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.52), transparent 88%);
       }
 
       a {
         color: inherit;
       }
 
+      img {
+        max-width: 100%;
+      }
+
       .shell {
-        width: min(1180px, calc(100% - 28px));
+        width: min(1200px, calc(100% - 28px));
         margin: 0 auto;
         padding: 18px 0 56px;
       }
 
       .nav,
-      .panel,
       .hero,
       .metric-card,
       .feature-card,
-      .step-card,
+      .shot-card,
+      .faq-card,
+      .cta-card,
       .proof-card {
         border: 1px solid var(--line);
-        background: var(--cream);
+        background: var(--panel);
         backdrop-filter: blur(18px);
-        box-shadow: var(--card-shadow);
+        box-shadow: var(--shadow);
       }
 
       .nav {
@@ -99,7 +114,7 @@
         height: 60px;
         padding: 8px;
         border-radius: 18px;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.76));
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.78));
         border: 1px solid rgba(17, 17, 17, 0.08);
       }
 
@@ -111,11 +126,11 @@
 
       .eyebrow {
         margin: 0 0 4px;
+        color: var(--muted);
         font-size: 0.72rem;
         font-weight: 800;
         letter-spacing: 0.18em;
         text-transform: uppercase;
-        color: var(--muted);
       }
 
       .brand-title {
@@ -144,25 +159,35 @@
       }
 
       .nav-links a {
-        background: rgba(255, 255, 255, 0.54);
+        background: rgba(255, 255, 255, 0.56);
       }
 
       .button.primary {
         background: var(--accent);
-        color: var(--accent-ink);
         border-color: transparent;
       }
 
       .button.secondary {
-        background: rgba(255, 255, 255, 0.56);
+        background: rgba(255, 255, 255, 0.58);
+      }
+
+      .button.store {
+        background: #111111;
+        color: #f7f7f1;
+        border-color: transparent;
+      }
+
+      .button.store-soft {
+        background: rgba(17, 17, 17, 0.05);
+        color: var(--ink);
       }
 
       .hero {
         position: relative;
         overflow: hidden;
         display: grid;
-        grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
-        gap: 22px;
+        grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.98fr);
+        gap: 24px;
         margin-top: 18px;
         padding: clamp(26px, 5vw, 48px);
         border-radius: 34px;
@@ -173,14 +198,15 @@
         position: absolute;
         top: -120px;
         right: -40px;
-        width: 300px;
-        height: 300px;
+        width: 320px;
+        height: 320px;
         border-radius: 50%;
-        background: radial-gradient(circle, rgba(215, 240, 111, 0.86), transparent 70%);
-        opacity: 0.88;
+        background: radial-gradient(circle, rgba(215, 240, 111, 0.92), transparent 70%);
+        opacity: 0.92;
       }
 
-      .hero-copy {
+      .hero-copy,
+      .hero-stage {
         position: relative;
         z-index: 1;
       }
@@ -195,27 +221,47 @@
 
       h1 {
         max-width: 11ch;
-        margin-top: 14px;
-        font-size: clamp(3.2rem, 8vw, 6.4rem);
+        margin-top: 12px;
+        font-size: clamp(3.2rem, 8vw, 6.2rem);
         line-height: 0.92;
+      }
+
+      h2 {
+        font-size: clamp(2.2rem, 5vw, 3.8rem);
+        line-height: 0.95;
+      }
+
+      .hero-lead,
+      .section-copy,
+      .metric-text,
+      .feature-card p,
+      .faq-answer,
+      .cta-card p,
+      .proof-card p,
+      footer {
+        color: var(--muted);
+        line-height: 1.72;
       }
 
       .hero-lead {
         max-width: 58ch;
         margin: 18px 0 0;
         font-size: 1.08rem;
-        line-height: 1.75;
-        color: var(--muted);
       }
 
-      .hero-actions {
+      .hero-actions,
+      .availability-actions,
+      .proof-actions {
         display: flex;
         flex-wrap: wrap;
         gap: 12px;
+      }
+
+      .hero-actions {
         margin-top: 24px;
       }
 
-      .hero-notes {
+      .hero-chips {
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
@@ -226,108 +272,191 @@
         padding: 10px 14px;
         border-radius: 999px;
         border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.54);
+        background: rgba(255, 255, 255, 0.56);
         font-size: 0.94rem;
         font-weight: 700;
       }
 
-      .panel {
-        position: relative;
-        z-index: 1;
-        padding: 16px;
-        border-radius: 28px;
-      }
-
-      .phone {
-        overflow: hidden;
-        border-radius: 28px;
-        border: 1px solid var(--line-strong);
-        background: linear-gradient(180deg, #111111 0%, #202020 100%);
-        color: #f8f8f3;
-      }
-
-      .phone-top {
-        display: flex;
+      .availability-note {
+        display: inline-flex;
         align-items: center;
-        justify-content: space-between;
-        padding: 18px 18px 12px;
+        gap: 10px;
+        padding: 14px 16px;
+        margin-top: 18px;
+        border-radius: 20px;
+        border: 1px solid rgba(17, 17, 17, 0.08);
+        background: rgba(17, 17, 17, 0.045);
+        box-shadow: var(--shadow-soft);
       }
 
-      .phone-title {
-        font-size: 1.02rem;
-        font-weight: 800;
+      .availability-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--accent-deep);
       }
 
-      .phone-subtitle {
-        font-size: 0.84rem;
-        color: rgba(248, 248, 243, 0.72);
+      .stage-stack {
+        position: relative;
+        min-height: 560px;
       }
 
-      .phone-body {
-        display: grid;
-        gap: 12px;
-        padding: 0 14px 14px;
+      .floating-card {
+        position: absolute;
+        border: 1px solid var(--line);
+        border-radius: 26px;
+        background: var(--panel-strong);
+        box-shadow: var(--shadow-soft);
       }
 
-      .phone-metrics {
+      .floating-card.one {
+        top: 14px;
+        left: 0;
+        width: min(100%, 300px);
+        padding: 16px;
+        transform: rotate(-5deg);
+        animation: drift-one 7s ease-in-out infinite;
+      }
+
+      .floating-card.two {
+        top: 160px;
+        right: 10px;
+        width: min(100%, 240px);
+        padding: 18px;
+        transform: rotate(4deg);
+        animation: drift-two 8s ease-in-out infinite;
+      }
+
+      .floating-card.three {
+        bottom: 0;
+        left: 42px;
+        width: min(100%, 330px);
+        padding: 18px;
+        transform: rotate(-2deg);
+        animation: drift-three 9s ease-in-out infinite;
+      }
+
+      @keyframes drift-one {
+        0%, 100% { transform: rotate(-5deg) translateY(0); }
+        50% { transform: rotate(-4deg) translateY(-10px); }
+      }
+
+      @keyframes drift-two {
+        0%, 100% { transform: rotate(4deg) translateY(0); }
+        50% { transform: rotate(5deg) translateY(8px); }
+      }
+
+      @keyframes drift-three {
+        0%, 100% { transform: rotate(-2deg) translateY(0); }
+        50% { transform: rotate(-1deg) translateY(-12px); }
+      }
+
+      .stat-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 10px;
       }
 
-      .phone-card,
-      .list-row {
-        border-radius: 18px;
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+      .mini-stat,
+      .metric-card,
+      .feature-card,
+      .shot-card,
+      .faq-card,
+      .cta-card,
+      .proof-card {
+        border-radius: 28px;
       }
 
-      .phone-card {
+      .mini-stat {
         padding: 12px;
+        border: 1px solid rgba(17, 17, 17, 0.08);
+        background: rgba(17, 17, 17, 0.04);
       }
 
-      .phone-card strong,
-      .list-main strong {
-        display: block;
-        font-size: 1.05rem;
-        font-weight: 800;
-      }
-
-      .phone-label {
+      .mini-label {
+        color: var(--muted);
         font-size: 0.72rem;
-        color: rgba(248, 248, 243, 0.7);
-        text-transform: uppercase;
+        font-weight: 800;
         letter-spacing: 0.12em;
+        text-transform: uppercase;
       }
 
-      .list-row {
+      .mini-value {
+        margin-top: 6px;
+        font-size: 1.22rem;
+        font-weight: 900;
+        letter-spacing: -0.04em;
+      }
+
+      .inventory-head,
+      .calculator-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+      }
+
+      .inventory-list,
+      .calculator-stack {
+        display: grid;
+        gap: 12px;
+      }
+
+      .inventory-row {
         display: grid;
         grid-template-columns: 48px 1fr auto;
-        align-items: center;
         gap: 12px;
+        align-items: center;
         padding: 12px;
+        border-radius: 18px;
+        background: rgba(17, 17, 17, 0.04);
+        border: 1px solid rgba(17, 17, 17, 0.06);
       }
 
-      .list-thumb {
+      .thumb {
         width: 48px;
         height: 48px;
         border-radius: 14px;
-        background: linear-gradient(135deg, rgba(215, 240, 111, 0.95), rgba(255, 255, 255, 0.16));
+        background: linear-gradient(135deg, rgba(215, 240, 111, 0.96), rgba(17, 17, 17, 0.08));
       }
 
-      .list-main {
-        display: grid;
-        gap: 4px;
+      .row-main strong,
+      .calc-result strong {
+        display: block;
+        font-size: 1rem;
       }
 
-      .list-meta {
-        font-size: 0.78rem;
-        color: rgba(248, 248, 243, 0.66);
+      .row-meta,
+      .calc-meta {
+        color: var(--muted);
+        font-size: 0.8rem;
       }
 
-      .list-side {
+      .row-side {
         text-align: right;
         font-weight: 800;
+      }
+
+      .calc-pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 0 14px;
+        border-radius: 16px;
+        border: 1px solid rgba(17, 17, 17, 0.08);
+        background: rgba(255, 255, 255, 0.76);
+        font-weight: 800;
+      }
+
+      .calc-result {
+        padding: 16px;
+        border-radius: 20px;
+        background: #111111;
+        color: #f8f8f2;
+      }
+
+      .calc-result .calc-meta {
+        color: rgba(248, 248, 242, 0.68);
       }
 
       .section {
@@ -336,8 +465,9 @@
 
       .metric-grid,
       .feature-grid,
-      .steps,
-      .proof-layout {
+      .shots-grid,
+      .faq-grid,
+      .bottom-grid {
         display: grid;
         gap: 16px;
       }
@@ -348,23 +478,22 @@
 
       .metric-card,
       .feature-card,
-      .step-card,
+      .shot-card,
+      .faq-card,
+      .cta-card,
       .proof-card {
-        border-radius: 28px;
-      }
-
-      .metric-card {
-        padding: 22px;
+        padding: 24px;
       }
 
       .metric-label,
       .section-label,
-      .feature-kicker {
+      .feature-kicker,
+      .faq-kicker {
+        color: var(--muted);
         font-size: 0.75rem;
         font-weight: 800;
         letter-spacing: 0.16em;
         text-transform: uppercase;
-        color: var(--muted);
       }
 
       .metric-value {
@@ -374,39 +503,19 @@
         letter-spacing: -0.06em;
       }
 
-      .metric-text,
-      .section-copy,
-      .feature-card p,
-      .step-card p,
-      .proof-card p,
-      footer {
-        color: var(--muted);
-        line-height: 1.7;
-      }
-
       .section-head {
         display: grid;
         gap: 10px;
         margin-bottom: 16px;
       }
 
-      .section-head h2 {
-        font-size: clamp(2.2rem, 5vw, 3.6rem);
-        line-height: 0.95;
-      }
-
       .feature-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
-      .feature-card,
-      .step-card,
-      .proof-card {
-        padding: 24px;
-      }
-
       .feature-card h3,
-      .step-card h3,
+      .shot-card h3,
+      .cta-card h3,
       .proof-card h3 {
         margin-top: 14px;
         font-size: 1.45rem;
@@ -422,24 +531,203 @@
         font-size: 1.45rem;
       }
 
-      .steps {
+      .shots-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
-      .step-number {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        background: var(--accent);
-        font-size: 1rem;
-        font-weight: 900;
+      .shot-card {
+        overflow: hidden;
       }
 
-      .proof-layout {
-        grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      .device {
+        overflow: hidden;
+        margin-top: 18px;
+        border: 1px solid rgba(17, 17, 17, 0.1);
+        border-radius: 28px;
+        background: linear-gradient(180deg, #101010 0%, #232323 100%);
+        color: #f8f8f2;
+      }
+
+      .device-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 18px 10px;
+      }
+
+      .device-title {
+        font-size: 1.02rem;
+        font-weight: 800;
+      }
+
+      .device-subtitle {
+        color: rgba(248, 248, 242, 0.68);
+        font-size: 0.8rem;
+      }
+
+      .device-body {
+        display: grid;
+        gap: 12px;
+        padding: 0 14px 14px;
+      }
+
+      .device-metrics {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .device-metric,
+      .device-row,
+      .device-form,
+      .device-graph {
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .device-metric {
+        padding: 12px;
+      }
+
+      .device-metric strong,
+      .device-row strong {
+        display: block;
+        font-size: 1rem;
+      }
+
+      .device-label {
+        color: rgba(248, 248, 242, 0.66);
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+
+      .device-row {
+        display: grid;
+        grid-template-columns: 42px 1fr auto;
+        gap: 10px;
+        align-items: center;
+        padding: 12px;
+      }
+
+      .device-thumb {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, rgba(215, 240, 111, 0.98), rgba(255, 255, 255, 0.16));
+      }
+
+      .device-side {
+        font-weight: 800;
+      }
+
+      .device-graph {
+        padding: 16px;
+      }
+
+      .graph-bars {
+        display: flex;
+        align-items: flex-end;
+        gap: 8px;
+        height: 120px;
+        margin-top: 14px;
+      }
+
+      .graph-bars span {
+        flex: 1;
+        border-radius: 10px 10px 4px 4px;
+        background: linear-gradient(180deg, var(--accent) 0%, rgba(215, 240, 111, 0.18) 100%);
+      }
+
+      .bar-1 { height: 44%; }
+      .bar-2 { height: 66%; }
+      .bar-3 { height: 90%; }
+      .bar-4 { height: 58%; }
+      .bar-5 { height: 78%; }
+
+      .device-form {
+        padding: 14px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .form-row {
+        display: grid;
+        gap: 8px;
+      }
+
+      .form-label {
+        color: rgba(248, 248, 242, 0.68);
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+
+      .form-input {
+        min-height: 44px;
+        padding: 0 14px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.08);
+        display: inline-flex;
+        align-items: center;
+        font-weight: 800;
+      }
+
+      .shot-copy {
+        margin-top: 16px;
+        color: var(--muted);
+      }
+
+      .faq-grid {
+        grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
+      }
+
+      .faq-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .faq-card details {
+        padding: 18px 0;
+        border-top: 1px solid rgba(17, 17, 17, 0.08);
+      }
+
+      .faq-card details:first-of-type {
+        padding-top: 0;
+        border-top: 0;
+      }
+
+      .faq-card summary {
+        cursor: pointer;
+        list-style: none;
+        font-size: 1.04rem;
+        font-weight: 800;
+      }
+
+      .faq-card summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .faq-answer {
+        margin: 10px 0 0;
+      }
+
+      .faq-side-list {
+        display: grid;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .faq-side-item {
+        padding: 14px 16px;
+        border-radius: 18px;
+        background: rgba(17, 17, 17, 0.04);
+        border: 1px solid rgba(17, 17, 17, 0.06);
+      }
+
+      .bottom-grid {
+        grid-template-columns: minmax(0, 1.04fr) minmax(280px, 0.96fr);
       }
 
       .snippet {
@@ -455,27 +743,28 @@
 
       footer {
         margin-top: 18px;
-        padding: 0 4px 20px;
+        padding: 0 4px 24px;
         font-size: 0.94rem;
       }
 
-      @media (max-width: 980px) {
+      @media (max-width: 1080px) {
         .hero,
-        .proof-layout,
+        .shots-grid,
         .feature-grid,
-        .steps,
-        .metric-grid {
+        .metric-grid,
+        .faq-grid,
+        .bottom-grid {
           grid-template-columns: 1fr;
         }
 
-        .phone-metrics {
-          grid-template-columns: repeat(3, minmax(0, 1fr));
+        .stage-stack {
+          min-height: 620px;
         }
       }
 
-      @media (max-width: 720px) {
+      @media (max-width: 760px) {
         .shell {
-          width: min(100% - 18px, 1180px);
+          width: min(100% - 18px, 1200px);
           padding-bottom: 34px;
         }
 
@@ -493,28 +782,59 @@
         .hero,
         .metric-card,
         .feature-card,
-        .step-card,
-        .proof-card,
-        .panel {
+        .shot-card,
+        .faq-card,
+        .cta-card,
+        .proof-card {
           border-radius: 22px;
         }
 
         h1 {
           max-width: none;
-          font-size: clamp(2.7rem, 14vw, 4.6rem);
+          font-size: clamp(2.7rem, 14vw, 4.7rem);
         }
 
-        .phone-metrics {
+        .stat-grid,
+        .device-metrics {
           grid-template-columns: 1fr;
         }
 
-        .list-row {
-          grid-template-columns: 44px 1fr;
+        .inventory-row,
+        .device-row {
+          grid-template-columns: 42px 1fr;
         }
 
-        .list-side {
+        .row-side,
+        .device-side {
           grid-column: 2;
           text-align: left;
+        }
+
+        .stage-stack {
+          min-height: 740px;
+        }
+
+        .floating-card.one,
+        .floating-card.two,
+        .floating-card.three {
+          left: 0;
+          right: 0;
+          width: 100%;
+          transform: none;
+          animation: none;
+        }
+
+        .floating-card.one {
+          top: 0;
+        }
+
+        .floating-card.two {
+          top: 240px;
+        }
+
+        .floating-card.three {
+          top: 430px;
+          bottom: auto;
         }
       }
     </style>
@@ -527,128 +847,143 @@
             <img src="./stockup-logo.png" alt="Logo StockUp">
           </span>
           <span>
-            <p class="eyebrow">iOS Resell Manager</p>
+            <p class="eyebrow">iOS resell manager</p>
             <p class="brand-title">StockUp</p>
           </span>
         </a>
 
         <nav class="nav-links" aria-label="Navigation principale">
           <a href="#features">Fonctionnalites</a>
-          <a href="#workflow">Workflow</a>
+          <a href="#screens">Captures</a>
+          <a href="#faq">FAQ</a>
           <a href="./admob.html">Page technique</a>
         </nav>
       </header>
 
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow">Pense pour le resell</p>
+          <p class="eyebrow">App iOS pour le resell</p>
           <h1 id="hero-title">Pilote ton stock, tes ventes et ton profit sans friction.</h1>
           <p class="hero-lead">
-            StockUp est une application iOS pour les revendeurs qui veulent suivre
-            leur inventaire, calculer leur rentabilite, gerer les frais de plateforme
-            et garder une vision claire de leurs ventes en temps reel.
+            StockUp aide les revendeurs a suivre leur inventaire, calculer leur
+            rentabilite, gerer les frais de plateforme, suivre les expeditions et
+            garder une vision nette de chaque vente depuis iPhone.
           </p>
 
-          <div class="hero-actions">
-            <a class="button primary" href="#features">Voir les fonctionnalites</a>
+          <div class="hero-actions" id="availability">
+            <a class="button store" href="#availability">Bientot sur l'App Store</a>
+            <a class="button primary" href="#screens">Voir les captures</a>
             <a class="button secondary" href="./admob.html">Voir la page technique</a>
           </div>
 
-          <div class="hero-notes" aria-label="Points forts">
+          <div class="hero-chips" aria-label="Points forts">
             <span class="chip">Inventaire en temps reel</span>
             <span class="chip">ROI et profit net</span>
-            <span class="chip">Multi-devises</span>
-            <span class="chip">Tracking des expeditions</span>
+            <span class="chip">Tracking expeditions</span>
+            <span class="chip">Multi-devise</span>
+          </div>
+
+          <div class="availability-note">
+            <span class="availability-dot" aria-hidden="true"></span>
+            <span>Le bouton App Store est deja en place. Il sera branche vers la fiche publique des que l'app sera publiee.</span>
           </div>
         </div>
 
-        <aside class="panel" aria-label="Apercu produit">
-          <div class="phone">
-            <div class="phone-top">
-              <div>
-                <div class="phone-title">Dashboard StockUp</div>
-                <div class="phone-subtitle">Vue rapide sur ton activite</div>
+        <div class="hero-stage" aria-label="Apercus produit">
+          <div class="stage-stack">
+            <article class="floating-card one">
+              <p class="eyebrow">Dashboard</p>
+              <div class="stat-grid">
+                <div class="mini-stat">
+                  <span class="mini-label">Profit</span>
+                  <div class="mini-value">2 840 EUR</div>
+                </div>
+                <div class="mini-stat">
+                  <span class="mini-label">Ventes</span>
+                  <div class="mini-value">37</div>
+                </div>
+                <div class="mini-stat">
+                  <span class="mini-label">ROI</span>
+                  <div class="mini-value">31%</div>
+                </div>
               </div>
-              <div class="phone-subtitle">iPhone</div>
-            </div>
+            </article>
 
-            <div class="phone-body">
-              <div class="phone-metrics">
-                <div class="phone-card">
-                  <span class="phone-label">Profit</span>
-                  <strong>+2 840 EUR</strong>
+            <article class="floating-card two">
+              <div class="inventory-head">
+                <strong>Inventaire</strong>
+                <span class="mini-label">Live stock</span>
+              </div>
+              <div class="inventory-list">
+                <div class="inventory-row">
+                  <div class="thumb"></div>
+                  <div class="row-main">
+                    <strong>Nike Dunk Low</strong>
+                    <div class="row-meta">Vinted | Stock restant 2</div>
+                  </div>
+                  <div class="row-side">+68 EUR</div>
                 </div>
-                <div class="phone-card">
-                  <span class="phone-label">Ventes</span>
-                  <strong>37</strong>
-                </div>
-                <div class="phone-card">
-                  <span class="phone-label">ROI</span>
-                  <strong>31%</strong>
+                <div class="inventory-row">
+                  <div class="thumb"></div>
+                  <div class="row-main">
+                    <strong>Jordan 4 Retro</strong>
+                    <div class="row-meta">eBay | Tracking ajoute</div>
+                  </div>
+                  <div class="row-side">+124 EUR</div>
                 </div>
               </div>
+            </article>
 
-              <div class="list-row">
-                <div class="list-thumb"></div>
-                <div class="list-main">
-                  <strong>Nike Dunk Low</strong>
-                  <span class="list-meta">Stock | Vinted | Quantite restante 2</span>
-                </div>
-                <div class="list-side">+68 EUR</div>
+            <article class="floating-card three">
+              <div class="calculator-head">
+                <strong>Calculateur de profit</strong>
+                <span class="mini-label">Avant publication</span>
               </div>
-
-              <div class="list-row">
-                <div class="list-thumb"></div>
-                <div class="list-main">
-                  <strong>Jordan 4 Retro</strong>
-                  <span class="list-meta">Vendu | eBay | Tracking ajoute</span>
+              <div class="calculator-stack">
+                <div class="calc-pill">Achat 180 EUR</div>
+                <div class="calc-pill">Vente 265 EUR</div>
+                <div class="calc-pill">Frais plateforme 21 EUR</div>
+                <div class="calc-result">
+                  <span class="calc-meta">Profit net estime</span>
+                  <strong>64 EUR</strong>
                 </div>
-                <div class="list-side">+124 EUR</div>
               </div>
-
-              <div class="list-row">
-                <div class="list-thumb"></div>
-                <div class="list-main">
-                  <strong>Calculateur profit</strong>
-                  <span class="list-meta">Prix, frais plateforme, estimation nette</span>
-                </div>
-                <div class="list-side">Live</div>
-              </div>
-            </div>
+            </article>
           </div>
-        </aside>
+        </div>
       </section>
 
       <section class="section metric-grid" aria-label="Indicateurs clefs">
         <article class="metric-card">
-          <div class="metric-label">Suivi clair</div>
+          <div class="metric-label">Stock</div>
           <div class="metric-value">3 statuts</div>
-          <p class="metric-text">En stock, en vente, vendu. Tu sais immediatement ou se trouve chaque article.</p>
+          <p class="metric-text">En stock, en vente, vendu. Tu sais ou se trouve chaque article sans feuille de calcul annexe.</p>
         </article>
         <article class="metric-card">
-          <div class="metric-label">Analyse directe</div>
+          <div class="metric-label">Analyse</div>
           <div class="metric-value">ROI live</div>
-          <p class="metric-text">Profit net, cout total, repartition par plateforme et performances par periode.</p>
+          <p class="metric-text">Profit net, cout total, ventes et repartition par plateforme dans une vue claire et exploitable.</p>
         </article>
         <article class="metric-card">
           <div class="metric-label">Operations</div>
           <div class="metric-value">Tracking</div>
-          <p class="metric-text">Ajoute un numero d'expedition, suis la vente et garde un historique propre.</p>
+          <p class="metric-text">Associe ta vente au numero de suivi et garde un historique propre de chaque expedition.</p>
         </article>
         <article class="metric-card">
-          <div class="metric-label">International</div>
+          <div class="metric-label">Expansion</div>
           <div class="metric-value">Multi-devise</div>
-          <p class="metric-text">Travaille avec plusieurs monnaies et un affichage consolide dans ta devise preferee.</p>
+          <p class="metric-text">Travaille avec plusieurs monnaies et consolide les totaux dans ta devise preferee.</p>
         </article>
       </section>
 
       <section class="section" id="features">
         <div class="section-head">
           <p class="section-label">Fonctionnalites</p>
-          <h2>Une stack simple pour gerer tout le cycle du resell.</h2>
+          <h2>Une app pensee pour le cycle complet du resell.</h2>
           <p class="section-copy">
-            L'application regroupe les besoins concrets du revendeur: stock,
-            prix, plateformes, frais, ventes, suivi d'expedition et analyse.
+            StockUp rassemble les taches qui prennent habituellement trop de temps:
+            suivi du stock, calcul des marges, gestion des plateformes, analyse
+            de performance et lecture rapide des chiffres.
           </p>
         </div>
 
@@ -656,103 +991,256 @@
           <article class="feature-card">
             <div class="icon-box" aria-hidden="true">01</div>
             <p class="feature-kicker">Inventaire</p>
-            <h3>Gere ton stock article par article.</h3>
-            <p>Ajoute quantite, prix d'achat, photos, statut et plateforme de vente dans une seule interface claire.</p>
+            <h3>Ajoute tes articles proprement.</h3>
+            <p>Quantite, prix d'achat, photos, statut, plateforme et informations utiles dans un seul workflow.</p>
           </article>
 
           <article class="feature-card">
             <div class="icon-box" aria-hidden="true">02</div>
-            <p class="feature-kicker">Rentabilite</p>
-            <h3>Calcule ton profit reel.</h3>
-            <p>StockUp prend en compte prix de vente, frais de plateforme, frais d'envoi et ROI pour sortir un resultat net.</p>
+            <p class="feature-kicker">Profit</p>
+            <h3>Calcule ton resultat reel.</h3>
+            <p>Prix de vente, frais de plateforme, frais d'envoi et ROI sont integres pour sortir un profit net lisible.</p>
           </article>
 
           <article class="feature-card">
             <div class="icon-box" aria-hidden="true">03</div>
             <p class="feature-kicker">Stats</p>
-            <h3>Lis tes performances rapidement.</h3>
-            <p>Filtre par periode, statut ou plateforme pour voir profit, ventes, cout total et repartition de tes canaux.</p>
+            <h3>Vois ce qui performe.</h3>
+            <p>Filtre par periode, statut ou plateforme pour lire le profit, les ventes et la distribution de ton activite.</p>
           </article>
 
           <article class="feature-card">
             <div class="icon-box" aria-hidden="true">04</div>
             <p class="feature-kicker">Plateformes</p>
-            <h3>Automatise les frais de vente.</h3>
-            <p>Configure tes plateformes de revente pour appliquer automatiquement les commissions et frais fixes.</p>
+            <h3>Automatise les frais.</h3>
+            <p>Configure tes plateformes de revente pour calculer automatiquement commissions et frais fixes.</p>
           </article>
 
           <article class="feature-card">
             <div class="icon-box" aria-hidden="true">05</div>
-            <p class="feature-kicker">Expedition</p>
+            <p class="feature-kicker">Suivi</p>
             <h3>Relie la vente au tracking.</h3>
-            <p>Ajoute un numero de suivi et garde une trace propre de chaque commande expediee.</p>
+            <p>Ajoute le numero de suivi et garde une trace operationnelle de chaque commande expediee.</p>
           </article>
 
           <article class="feature-card">
             <div class="icon-box" aria-hidden="true">06</div>
             <p class="feature-kicker">Export</p>
-            <h3>Recupere tes donnees quand tu veux.</h3>
-            <p>Import et export CSV pour garder la main sur ton historique et tes analyses hors de l'app.</p>
+            <h3>Recupere tes donnees.</h3>
+            <p>Import et export CSV pour garder la main sur tes historiques et tes analyses hors de l'application.</p>
           </article>
         </div>
       </section>
 
-      <section class="section" id="workflow">
+      <section class="section" id="screens">
         <div class="section-head">
-          <p class="section-label">Workflow</p>
-          <h2>Trois etapes pour garder un resell propre.</h2>
+          <p class="section-label">Captures d'ecran</p>
+          <h2>Trois vues qui resument l'app en quelques secondes.</h2>
+          <p class="section-copy">
+            Ces apercus reprennent les workflows principaux de StockUp:
+            pilotage du dashboard, suivi de l'inventaire et simulation de marge.
+          </p>
         </div>
 
-        <div class="steps">
-          <article class="step-card">
-            <span class="step-number">1</span>
-            <h3>Ajoute l'article</h3>
-            <p>Renseigne le produit, la quantite, le prix d'achat, les photos et la plateforme cible.</p>
+        <div class="shots-grid">
+          <article class="shot-card">
+            <p class="feature-kicker">Capture 01</p>
+            <h3>Dashboard et chiffres clefs</h3>
+            <div class="device">
+              <div class="device-top">
+                <div>
+                  <div class="device-title">Stats</div>
+                  <div class="device-subtitle">Profit, ventes, ROI</div>
+                </div>
+                <div class="device-subtitle">30 jours</div>
+              </div>
+              <div class="device-body">
+                <div class="device-metrics">
+                  <div class="device-metric">
+                    <span class="device-label">Net profit</span>
+                    <strong>2 840 EUR</strong>
+                  </div>
+                  <div class="device-metric">
+                    <span class="device-label">Units sold</span>
+                    <strong>37</strong>
+                  </div>
+                </div>
+                <div class="device-graph">
+                  <span class="device-label">Progression ventes</span>
+                  <div class="graph-bars" aria-hidden="true">
+                    <span class="bar-1"></span>
+                    <span class="bar-2"></span>
+                    <span class="bar-3"></span>
+                    <span class="bar-4"></span>
+                    <span class="bar-5"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="shot-copy">Lecture rapide du profit net, des ventes et des tendances sans quitter l'app.</p>
           </article>
 
-          <article class="step-card">
-            <span class="step-number">2</span>
-            <h3>Suit la vente</h3>
-            <p>Fais evoluer le statut de l'article, enregistre le prix de vente et le tracking au bon moment.</p>
+          <article class="shot-card">
+            <p class="feature-kicker">Capture 02</p>
+            <h3>Inventaire et statut des articles</h3>
+            <div class="device">
+              <div class="device-top">
+                <div>
+                  <div class="device-title">Inventory</div>
+                  <div class="device-subtitle">Stock, listed, sold</div>
+                </div>
+                <div class="device-subtitle">All items</div>
+              </div>
+              <div class="device-body">
+                <div class="device-row">
+                  <div class="device-thumb"></div>
+                  <div>
+                    <strong>Nike Dunk Low</strong>
+                    <div class="device-subtitle">Stock | Vinted | Qty 2</div>
+                  </div>
+                  <div class="device-side">+68</div>
+                </div>
+                <div class="device-row">
+                  <div class="device-thumb"></div>
+                  <div>
+                    <strong>Jordan 4 Retro</strong>
+                    <div class="device-subtitle">Sold | eBay | Tracking</div>
+                  </div>
+                  <div class="device-side">+124</div>
+                </div>
+                <div class="device-row">
+                  <div class="device-thumb"></div>
+                  <div>
+                    <strong>New Balance 2002R</strong>
+                    <div class="device-subtitle">Listed | StockX | Qty 1</div>
+                  </div>
+                  <div class="device-side">Live</div>
+                </div>
+              </div>
+            </div>
+            <p class="shot-copy">Visualise tes articles, leur statut de vente et la marge associee en un seul coup d'oeil.</p>
           </article>
 
-          <article class="step-card">
-            <span class="step-number">3</span>
-            <h3>Analyse le resultat</h3>
-            <p>Consulte le profit net, le ROI et la repartition des performances pour ajuster ta strategie.</p>
+          <article class="shot-card">
+            <p class="feature-kicker">Capture 03</p>
+            <h3>Calculateur de profit</h3>
+            <div class="device">
+              <div class="device-top">
+                <div>
+                  <div class="device-title">Profit Calculator</div>
+                  <div class="device-subtitle">Avant mise en ligne</div>
+                </div>
+                <div class="device-subtitle">EUR</div>
+              </div>
+              <div class="device-body">
+                <div class="device-form">
+                  <div class="form-row">
+                    <span class="form-label">Purchase price</span>
+                    <div class="form-input">180.00</div>
+                  </div>
+                  <div class="form-row">
+                    <span class="form-label">Selling price</span>
+                    <div class="form-input">265.00</div>
+                  </div>
+                  <div class="form-row">
+                    <span class="form-label">Platform fees</span>
+                    <div class="form-input">21.00</div>
+                  </div>
+                </div>
+                <div class="calc-result">
+                  <span class="calc-meta">Estimated net profit</span>
+                  <strong>64 EUR</strong>
+                </div>
+              </div>
+            </div>
+            <p class="shot-copy">Simule ton profit reel avant de publier une annonce et evite les marges trop faibles.</p>
           </article>
         </div>
       </section>
 
-      <section class="section proof-layout" aria-label="Page technique">
-        <article class="proof-card">
-          <p class="section-label">Support technique</p>
-          <h3>Le domaine heberge aussi la verification AdMob.</h3>
+      <section class="section" id="faq">
+        <div class="section-head">
+          <p class="section-label">FAQ</p>
+          <h2>Les questions utiles avant la mise en ligne publique.</h2>
+        </div>
+
+        <div class="faq-grid">
+          <article class="faq-card">
+            <p class="faq-kicker">Questions frequentes</p>
+            <div class="faq-list">
+              <details open>
+                <summary>A qui sert StockUp ?</summary>
+                <p class="faq-answer">StockUp cible les revendeurs qui gerent des achats, des mises en vente, des expeditions et des suivis de marge sur plusieurs articles.</p>
+              </details>
+              <details>
+                <summary>Que puis-je suivre dans l'application ?</summary>
+                <p class="faq-answer">Le stock, les prix d'achat et de vente, les frais de plateforme, les quantites, les statuts, les numeros de suivi, le profit net et le ROI.</p>
+              </details>
+              <details>
+                <summary>L'app gere-t-elle plusieurs devises ?</summary>
+                <p class="faq-answer">Oui. Le projet contient deja un systeme de conversion et une devise preferee pour consolider les totaux.</p>
+              </details>
+              <details>
+                <summary>Le bouton App Store ne renvoie pas encore vers une fiche. Pourquoi ?</summary>
+                <p class="faq-answer">La structure premium est en place, mais aucun lien App Store public n'est present dans le depot. Le bouton sera branche des que la fiche sera disponible.</p>
+              </details>
+              <details>
+                <summary>Pourquoi y a-t-il une page technique distincte ?</summary>
+                <p class="faq-answer">Le domaine sert aussi a publier le fichier app-ads.txt pour AdMob. La page technique separe ce besoin public de la presentation produit.</p>
+              </details>
+            </div>
+          </article>
+
+          <aside class="faq-card">
+            <p class="faq-kicker">Ce que la page met en avant</p>
+            <h3>Une presentation simple, mais prete a vendre l'app.</h3>
+            <p>
+              La landing page donne maintenant une vraie lecture produit:
+              proposition de valeur, fonctionnalites, captures d'ecran, FAQ et
+              CTA App Store, tout en conservant le lien vers la page technique.
+            </p>
+            <div class="faq-side-list">
+              <div class="faq-side-item">CTA App Store visible des le hero</div>
+              <div class="faq-side-item">Section captures reliee a la navigation</div>
+              <div class="faq-side-item">FAQ pour rassurer avant la sortie</div>
+              <div class="faq-side-item">Page technique AdMob toujours accessible</div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section bottom-grid">
+        <article class="cta-card">
+          <p class="section-label">Disponibilite</p>
+          <h3>Le bouton App Store est pret pour la sortie.</h3>
           <p>
-            En plus de presenter l'application, ce site publie le fichier
-            <strong>app-ads.txt</strong> exige par AdMob pour valider le publisher
-            autorise. La page technique reste accessible separement.
+            La page inclut deja le CTA principal. Des que tu as l'URL App Store
+            publique, il suffit de remplacer l'ancre actuelle par le lien final.
           </p>
-          <div class="hero-actions">
-            <a class="button primary" href="./admob.html">Ouvrir la page technique</a>
-            <a class="button secondary" href="./app-ads.txt">Voir app-ads.txt</a>
+          <div class="availability-actions">
+            <a class="button store" href="#availability">Bientot sur l'App Store</a>
+            <a class="button secondary" href="#screens">Revoir les captures</a>
           </div>
         </article>
 
         <aside class="proof-card">
-          <p class="section-label">Publisher autorise</p>
-          <span class="snippet">google.com, pub-8763543774975095, DIRECT, f08c47fec0942fa0</span>
-          <p style="margin-top: 14px;">
-            Le fichier est disponible a la racine du domaine pour rester
-            conforme au comportement attendu par les crawlers AdMob.
+          <p class="section-label">Support technique</p>
+          <h3>AdMob et landing page restent relies.</h3>
+          <p>
+            Le domaine presente l'application tout en gardant une page technique
+            dediee pour la verification AdMob et le fichier public app-ads.txt.
           </p>
+          <span class="snippet">google.com, pub-8763543774975095, DIRECT, f08c47fec0942fa0</span>
+          <div class="proof-actions" style="margin-top: 16px;">
+            <a class="button primary" href="./admob.html">Ouvrir la page technique</a>
+            <a class="button secondary" href="./app-ads.txt">Voir app-ads.txt</a>
+          </div>
         </aside>
       </section>
 
       <footer>
-        StockUp est une application iOS de gestion d'inventaire et de profits pour le resell.
-        Besoin de la page de preuve publique AdMob ? Ouvre
-        <a href="./admob.html">la page technique</a>.
+        StockUp est une app iOS de gestion d'inventaire et de profits pour le resell.
+        La page technique AdMob reste disponible sur <a href="./admob.html">admob.html</a>.
       </footer>
     </div>
   </body>
